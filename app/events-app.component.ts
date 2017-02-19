@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     //moduleId: module.id,
     selector: 'events-app',
-    template: '<events-list></events-list>'
+    template: `
+    <nav-bar></nav-bar>
+    <router-outlet></router-outlet>`
     //templateUrl: 'events-app.component.html'
 })
-export class EventsAppComponent implements OnInit {
-    constructor() { }
-
-    ngOnInit() { }
-}
+export class EventsAppComponent {}
