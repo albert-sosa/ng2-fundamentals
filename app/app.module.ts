@@ -13,14 +13,16 @@ import {
     EventDetailsComponent,
     EventRouteActivatorService,
     EventService,
+    CreateSessionComponent,
+    SessionListComponent
 } from './events/index'
 
 import { EventsAppComponent } from './events-app.component';
 
-import { NavbarComponent }      from './nav/navbar.component';
-import { ToastrService }        from './common/toastr.service';
-import { Error404Component }    from './errors/404.component';
-import { AuthService }          from './user/auth.service';
+import { NavbarComponent } from './nav/navbar.component';
+import { ToastrService } from './common/toastr.service';
+import { Error404Component } from './errors/404.component';
+import { AuthService } from './user/auth.service';
 
 @NgModule({
     imports: [
@@ -29,13 +31,23 @@ import { AuthService }          from './user/auth.service';
         FormsModule, ReactiveFormsModule
     ],
     exports: [],
-    declarations: [EventsAppComponent, EventsListComponent, EventThumbnailComponent, EventDetailsComponent, NavbarComponent, CreateEventComponent, Error404Component],
+    declarations: [
+        EventsAppComponent,
+        EventsListComponent,
+        EventThumbnailComponent,
+        EventDetailsComponent,
+        NavbarComponent,
+        CreateEventComponent,
+        Error404Component,
+        CreateSessionComponent,
+        SessionListComponent
+    ],
     bootstrap: [EventsAppComponent],
-    providers: [EventService, ToastrService, AuthService, EventRouteActivatorService, { provide:'canDeactivateCreateEvent', useValue: checkDirtyState },EventListResolver],
+    providers: [EventService, ToastrService, AuthService, EventRouteActivatorService, { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState }, EventListResolver],
 })
 export class AppModule { }
 
-function checkDirtyState(component: CreateEventComponent){
+function checkDirtyState(component: CreateEventComponent) {
     if (component.isDirty)
         return window.confirm("you need to save");
     return true;

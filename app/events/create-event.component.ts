@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from './shared/event.service';
 
@@ -13,7 +13,7 @@ import { EventService } from './shared/event.service';
     .error :ms-input-placeholder { color: #999; }
   `]
 })
-export class CreateEventComponent{
+export class CreateEventComponent implements OnInit{
     isDirty: boolean = true;
     constructor(private router: Router, private eventService: EventService){}
     cancel(){
@@ -21,5 +21,10 @@ export class CreateEventComponent{
     }
     saveEvent(formValues){
         this.eventService.saveEvent(formValues)
+        this.isDirty = true
+        this.router.navigate(['/events'])        
+    }
+    ngOnInit(){
+        
     }
 }
