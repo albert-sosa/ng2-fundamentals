@@ -6,20 +6,25 @@ import { IEvent } from './shared/index';
     selector: 'event-thumbnail',
     template: `
     <div [routerLink]="['/events',event.id]" class="well hoverwell thumbnail">
-        <h2>{{event.name}}</h2>
-        <div>Date: {{event.date}}</div>
-        <div>Time: {{event.time}}</div>
-        <div>Price: \${{event.price}}</div>
+        <h2>{{event?.name | uppercase}}</h2>
+        <div>Date: {{event?.date | date:'shortDate'}}</div>
+        <div [ngStyle]="getStartTimeStyle()" [ngSwitch]="event?.time">
+            Time: {{event?.time}}
+            <span *ngSwitchCase="'8:00 am'">(Early Start)</span>
+            <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
+            <span *ngSwitchDefault>(Normal Start)</span>
+        </div>
+        <div>Price: {{event?.price | currency:'USD':true}}</div>
         <div>
-            <span>Location: {{event.location.address}}</span>
-            <span class="padleft">{{event.location.city}}, {{event.location.country}}</span>
+            <span>Location: {{event?.location.address}}</span>
+            <span class="pad-left">{{event?.location.city}}, {{event?.location.country}}</span>
         </div>
         <button class="btn btn-primary" (click)="handleClickMe()">Click Me!</button>
     </div>`,
     styles:[`
         .thumbnail { min-height: 210px}
         .well div { color: #bbb }
-        .padleft{ padding-left: 10px; }
+        .pad-left{ padding-left: 10px; }
     `]
 })
 export class EventThumbnailComponent {
@@ -27,4 +32,8 @@ export class EventThumbnailComponent {
     @Output() eventClick = new EventEmitter();
 
     handleClickMe(){ this.eventClick.emit(this.event); }
+
+    getStartTimeStyle(){
+
+    }
 }
